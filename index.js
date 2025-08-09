@@ -7,7 +7,9 @@ const app = express();
 
 // CORS Configuration
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://frontend-coral-pi-99.vercel.app'  // frontend ka URL
+}));
 app.use(express.json());
 
 // MongoDB connection
