@@ -5,14 +5,16 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware - CORS config
+// CORS Configuration
 app.use(cors({
   origin: [
-    "http://localhost:5000", // local dev frontend
-    "https://frontend-git-main-asfiyahussain00s-projects.vercel.app" // deployed frontend
+    "http://localhost:3000", // Local development
+    "https://frontend-coral-pi-99.vercel.app", // Your production frontend
+    "https://frontend-git-main-asfiyahussain00s-projects.vercel.app" // Previous deployment
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
+  credentials: true
 }));
 
 app.use(express.json());
@@ -26,7 +28,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // Model
-const Item = mongoose.model('Items', { name: String });
+const Item = mongoose.model('Item', { name: String });
 
 // Routes
 app.get('/items', async (req, res) => {
@@ -68,6 +70,11 @@ app.delete('/items/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK' });
 });
 
 // Start server
