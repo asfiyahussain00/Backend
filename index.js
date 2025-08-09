@@ -6,17 +6,8 @@ require('dotenv').config();
 const app = express();
 
 // CORS Configuration
-app.use(cors({
-  origin: [
-    "http://localhost:3000", // Local development
-    "https://frontend-coral-pi-99.vercel.app", // Your production frontend
-    "https://frontend-git-main-asfiyahussain00s-projects.vercel.app" // Previous deployment
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-  credentials: true
-}));
 
+app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
@@ -72,10 +63,7 @@ app.delete('/items/:id', async (req, res) => {
   }
 });
 
-// Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK' });
-});
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
